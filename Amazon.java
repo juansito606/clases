@@ -2,18 +2,15 @@ import java.util.Scanner;
 
 public class Amazon {
 
-    // Matriz que representa los casilleros, nuestra estructura de datos principal
     private static Casillero[][] casilleros;
     private static int filas;
     private static int columnas;
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // El programa comienza pidiendo las dimensiones del sistema de casilleros
         filas = leerEntero(sc, "Ingrese numero de FILAS:", 1, 20);
         columnas = leerEntero(sc, "Ingrese numero de COLUMNAS:", 1, 20);
         
-        // Se inicializa la matriz con objetos Casillero vacíos
         casilleros = new Casillero[filas][columnas];
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -21,7 +18,6 @@ public class Amazon {
             }
         }
         
-        // Muestra el estado inicial de los casilleros
         System.out.println(esquemaCasilleros());
 
         int opcion;
@@ -32,7 +28,7 @@ public class Amazon {
             if (opcion == 1) {
                 System.out.println("--Registro de paquete--");
                 System.out.print("Nombre del destinatario: ");
-                sc.nextLine(); // Consumir el salto de línea pendiente del scanner
+                sc.nextLine(); 
                 String dest = sc.nextLine().trim();
                 
                 int f = leerEntero(sc, "Fila:", 0, filas - 1);
@@ -62,7 +58,6 @@ public class Amazon {
         sc.close();
     }
 
-    // Muestra las opciones del menú principal
     private static void mostrarMenu() {
         System.out.println("=============");
         System.out.println("1. Registrar paquete");
@@ -72,7 +67,6 @@ public class Amazon {
         System.out.println("=========");
     }
 
-    // Método para leer un número entero validado por rango
     private static int leerEntero(Scanner sc, String prompt, int min, int max) {
         int valor = -1;
         boolean valido = false;
@@ -93,9 +87,7 @@ public class Amazon {
         return valor;
     }
     
-    // Intenta registrar un paquete en una ubicación específica de la matriz
     private static boolean registrarPaquete(int fila, int columna, String destinatario) {
-        // Valida que las coordenadas estén dentro de los límites de la matriz
         if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
             Casillero casillero = casilleros[fila][columna];
             if (!casillero.estaOcupado()) {
@@ -106,7 +98,6 @@ public class Amazon {
         return false;
     }
 
-    // Crea y devuelve una representación visual de los casilleros
     private static String esquemaCasilleros() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < filas; i++) {
@@ -118,7 +109,6 @@ public class Amazon {
         return sb.toString();
     }
 
-    // Genera un reporte con la información de los paquetes en casilleros ocupados
     private static String infoPaquetes() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < filas; i++) {
@@ -126,7 +116,9 @@ public class Amazon {
                 Casillero casillero = casilleros[i][j];
                 if (casillero.estaOcupado()) {
                     sb.append("Casillero [" + i + "," + j + "]: ");
-                    sb.append("Paquete para " + casillero.getPaquete().getDestinatario() + "\n");
+                    // Aquí se accede a la información del paquete correctamente
+                    sb.append("Paquete para " + casillero.getPaquete().getDestinatario());
+                    sb.append(", Fecha de Ingreso: " + casillero.getPaquete().getFechaIngreso() + "\n");
                 }
             }
         }
